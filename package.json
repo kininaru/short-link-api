@@ -1,7 +1,7 @@
 {
   "name": "short-link-api",
   "version": "1.0.0",
-  "main": "index.ts",
+  "main": "index.js",
   "repository": "git@github.com:Kininaru/short-link-api.git",
   "author": "Kininaru <shiftregister233@outlook.com>",
   "license": "MIT"

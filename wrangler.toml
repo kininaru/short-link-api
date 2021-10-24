@@ -6,3 +6,7 @@ usage_model = ''
 compatibility_flags = []
 workers_dev = true
 compatibility_date = "2021-10-24"
+kv_namespaces = [
+    { binding = "ShortLinkApi", id = "9891e27bca864870ba410a95312ca3e1" }
+]
+
