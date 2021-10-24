@@ -1,5 +1,5 @@
 name = "short-link-api"
-type = "webpack"
+type = "javascript"
 route = ''
 zone_id = ''
 usage_model = ''
