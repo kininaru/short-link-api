@@ -7,6 +7,7 @@ compatibility_flags = []
 workers_dev = true
 compatibility_date = "2021-10-24"
 kv_namespaces = [
-    { binding = "ShortLinkApi", id = "9891e27bca864870ba410a95312ca3e1" }
+    { binding = "ShortLinkApi", id = "9891e27bca864870ba410a95312ca3e1" },
+    { binding = "ShortLink", id = "08e9c791740a4a0f8726a4c6ca2c6fe3" }
 ]
 
