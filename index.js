@@ -1,9 +1,5 @@
-addEventListener("fetch", (event) => {
-    event.respondWith(
-        handleRequest(event.request).catch(
-            (err) => new Response(err.stack, {status: 500})
-        )
-    );
+addEventListener("fetch", event => {
+    event.respondWith(handleRequest(event.request).catch(err => new Response(err.stack, {status: 500})));
 });
 
 async function addLink(link) {
@@ -42,5 +38,5 @@ async function handleRequest(request) {
         default:
             return new Response("Command not found.", {status: 404});
     }
-    return new Response(response.msg);
+    return new Response(JSON.stringify(response));
 }
