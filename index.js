@@ -21,7 +21,7 @@ async function handleRequest(request) {
     let response = {code: 0};
     let body = await request.json();
     switch (request.url.split("/")[3]) {
-        case "test":
+        case "alive":
             response.msg = "ShortApi ctrl server.";
             break;
         case "add":
