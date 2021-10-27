@@ -21,8 +21,8 @@ async function handleRequest(request) {
     let response = {code: 0};
     let body = await request.json();
     switch (request.url.split("/")[3]) {
-        case "":
-            response.msg = "This is 7nm.co api ctrl server.";
+        case "test":
+            response.msg = "ShortApi ctrl server.";
             break;
         case "add":
             let link = await addLink(body.link);
