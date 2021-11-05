@@ -70,11 +70,5 @@ async function handleRequest(request) {
             return new Response("Command not found.", {status: 404});
     }
 
-    const myHeaders = new Headers();
-    myHeaders.set("Access-Control-Allow-Origin", '*');
-    myHeaders.set("Access-Control-Allow-Methods", "GET,HEAD,POST,OPTIONS");
-    myHeaders.set("Access-Control-Max-Age", "86400");
-    myHeaders.set("Access-Control-Allow-Credentials", "true");
-    myHeaders.set("Access-Control-Allow-Headers", "*");
-    return new Response(JSON.stringify(response), {headers: myHeaders,});
+    return new Response(JSON.stringify(response));
 }
