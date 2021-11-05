@@ -1,6 +1,4 @@
-addEventListener("fetch", event => {
-    event.respondWith(handleRequest(event.request).catch(err => new Response(err.stack, {status: 500})));
-});
+addEventListener("fetch", event => event.respondWith(handleRequest(event.request).catch(err => new Response(err.stack, {status: 500}))));
 
 function checkLink(link) {
     let linkSplit = link.split("/");
@@ -71,5 +69,13 @@ async function handleRequest(request) {
         default:
             return new Response("Command not found.", {status: 404});
     }
-    return new Response(JSON.stringify(response));
+
+    return new Response(JSON.stringify(response), {
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,HEAD,POST,OPTIONS",
+            "Access-Control-Max-Age": "86400",
+            "Access-Control-Allow-Headers": request.headers.get("Access-Control-Request-Headers"),
+        }
+    });
 }
