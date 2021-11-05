@@ -28,10 +28,14 @@ async function addLink(link) {
         name: "MD5",
     }, new TextEncoder().encode(link)));
     let shortLink = '/' + uint8ArrayToString(linkUint8Array.subarray(0, 6));
-    if (await ShortLink.get(shortLink) !== null) {
+
+    let checkFromKV = await ShortLink.get(shortLink);
+    if (checkFromKV !== null && checkFromKV !== link) {
         shortLink = '/' + uint8ArrayToString(linkUint8Array.subarray(10, 16));
-        if (await ShortLink.get(shortLink) !== null) return "no extra space";
+        checkFromKV = await ShortLink.get(shortLink);
+        if (checkFromKV !== null && checkFromKV !== link) return "no extra space";
     }
+    
     ShortLink.put(shortLink, link);
     return shortLink;
 }
