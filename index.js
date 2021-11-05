@@ -36,7 +36,7 @@ async function addLink(link) {
         if (checkFromKV !== null && checkFromKV !== link) return "no extra space";
     }
 
-    ShortLink.put(shortLink, link);
+    await ShortLink.put(shortLink, link);
     return shortLink;
 }
 
