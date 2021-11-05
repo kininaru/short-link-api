@@ -10,13 +10,30 @@ function checkLink(link) {
     return linkSplit;
 }
 
+let mapping = ['0', '1', '2', '3', '4', '5', ' 6', '7', '8', '9',
+    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+];
+
+function uint8ArrayToString(array) {
+    let ret = "";
+    array.map(value => ret += mapping[value % 62]);
+    return ret;
+}
+
 async function addLink(link) {
     let linkSplit = checkLink(link);
     if (linkSplit === false) return "link error";
-    let mLink = await crypto.subtle.digest({
+    let linkUint8Array = new Uint8Array(await crypto.subtle.digest({
         name: "MD5",
-    }, new TextEncoder().encode(link));
-    return mLink;
+    }, new TextEncoder().encode(link)));
+    let shortLink = '/' + uint8ArrayToString(linkUint8Array.subarray(0, 6));
+    if (await ShortLink.get(shortLink) !== null) {
+        shortLink = '/' + uint8ArrayToString(linkUint8Array.subarray(10, 16));
+        if (await ShortLink.get(shortLink) !== null) return "no extra space";
+    }
+    ShortLink.put(shortLink, link);
+    return shortLink;
 }
 
 async function setLink(shortLink, link) {
@@ -39,7 +56,7 @@ async function handleRequest(request) {
             break;
         case "add":
             let link = await addLink(body.link);
-            if (link === null) response.code = 1;
+            if (!link.startsWith("http")) response.code = 1;
             else response.msg = link;
             break;
         case "set":
