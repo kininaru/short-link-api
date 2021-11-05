@@ -59,9 +59,8 @@ async function handleRequest(request) {
             response.msg = "ShortApi ctrl server.";
             break;
         case "add":
-            let link = await addLink(body.link);
-            if (!link.startsWith("http")) response.code = 1;
-            else response.msg = link;
+            response.msg = await addLink(body.link);
+            if (!response.msg.startsWith("http")) response.code = 1;
             break;
         case "set":
             if (!setLink(body.shortLink, body.link)) response.code = 1;
