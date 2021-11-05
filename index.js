@@ -66,9 +66,44 @@ async function handleRequest(request) {
         case "delete":
             await deleteLink(body.shortLink);
             break;
+        case "manage":
+            return new Response(returnStaticPageManage());
         default:
             return new Response("Command not found.", {status: 404});
     }
 
     return new Response(JSON.stringify(response));
+}
+
+function returnStaticPageManage() {
+    return "<!DOCTYPE html>\n" +
+        "<html lang=\"en\">\n" +
+        "<head>\n" +
+        "    <meta charset=\"UTF-8\">\n" +
+        "    <title>Kininaru短链接</title>\n" +
+        "    <link rel=\"icon\" href=\"https://about.7nm.co/favicon.ico\">\n" +
+        "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+        "    <script>\n" +
+        "        function upload() {\n" +
+        "            let code = localStorage.getItem(\"code\");\n" +
+        "            let link = document.getElementById('link').value;\n" +
+        "            fetch(\"https://api.7nm.co/add\", {\n" +
+        "                method: \"POST\",\n" +
+        "                headers: {'Authorization': code},\n" +
+        "                body: JSON.stringify({link: link})\n" +
+        "            }).then(res => {\n" +
+        "                if (res.status !== 200) alert(res.status);\n" +
+        "                else res.json().then(res => {\n" +
+        "                    if (res.code !== 0) alert(res.msg);\n" +
+        "                    else alert(\"7nm.co\" + res.msg);\n" +
+        "                });\n" +
+        "            });\n" +
+        "        }\n" +
+        "    </script>\n" +
+        "</head>\n" +
+        "<body>\n" +
+        "<label for=\"link\">链接</label><input id=\"link\">\n" +
+        "<button onclick=\"upload()\">生成短链接</button>\n" +
+        "</body>\n" +
+        "</html>\n";
 }
