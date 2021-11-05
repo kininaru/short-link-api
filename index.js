@@ -2,8 +2,21 @@ addEventListener("fetch", event => {
     event.respondWith(handleRequest(event.request).catch(err => new Response(err.stack, {status: 500})));
 });
 
+function checkLink(link) {
+    let linkSplit = link.split("/");
+    if (linkSplit.length < 4) return false;
+    if (linkSplit[0] !== "https:" && linkSplit[0] !== "http:") return false;
+    if (linkSplit[1] !== "") return false;
+    return linkSplit;
+}
+
 async function addLink(link) {
-    return "/link";
+    let linkSplit = checkLink(link);
+    if (linkSplit === false) return "link error";
+    let mLink = await crypto.subtle.digest({
+        name: "MD5",
+    }, new TextEncoder().encode(link));
+    return mLink;
 }
 
 async function setLink(shortLink, link) {
