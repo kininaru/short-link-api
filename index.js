@@ -73,9 +73,11 @@ async function handleRequest(request) {
     return new Response(JSON.stringify(response), {
         headers: {
             "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Credentials": "true",
             "Access-Control-Allow-Methods": "GET,HEAD,POST,OPTIONS",
             "Access-Control-Max-Age": "86400",
-            "Access-Control-Allow-Headers": request.headers.get("Access-Control-Request-Headers"),
+            "Access-Control-Allow-Headers": "Origin",
+            "Access-Control-Expose-Headers": "Content-Length",
         }
     });
 }
