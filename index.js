@@ -42,12 +42,12 @@ async function addLink(link) {
 
 async function setLink(shortLink, link) {
     if (await ShortLink.get(shortLink) !== null) return false;
-    ShortLink.put(shortLink, link);
+    await ShortLink.put(shortLink, link);
     return true;
 }
 
-function deleteLink(shortLink) {
-    ShortLink.delete(shortLink);
+async function deleteLink(shortLink) {
+    await ShortLink.delete(shortLink);
 }
 
 async function handleRequest(request) {
@@ -66,7 +66,7 @@ async function handleRequest(request) {
             if (!setLink(body.shortLink, body.link)) response.code = 1;
             break;
         case "delete":
-            deleteLink(body.shortLink);
+            await deleteLink(body.shortLink);
             break;
         default:
             return new Response("Command not found.", {status: 404});
