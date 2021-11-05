@@ -49,7 +49,11 @@ async function deleteLink(shortLink) {
 }
 
 async function handleRequest(request) {
-    if (request.url.split("/")[3] === "manage") return new Response(returnStaticPageManage());
+    if (request.url.split("/")[3] === "manage") return new Response(returnStaticPageManage(), {
+        headers: {
+            "content-type": "text/html;charset=UTF-8",
+        },
+    });
     if (request.headers.get("Authorization") !== await ShortLinkApi.get("code")) return new Response("Unauthorized operation.", {status: 403});
     let response = {code: 0};
     let body = await request.json();
