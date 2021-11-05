@@ -49,6 +49,7 @@ async function deleteLink(shortLink) {
 }
 
 async function handleRequest(request) {
+    if (request.url.split("/")[3] === "manage") return new Response(returnStaticPageManage());
     if (request.headers.get("Authorization") !== await ShortLinkApi.get("code")) return new Response("Unauthorized operation.", {status: 403});
     let response = {code: 0};
     let body = await request.json();
@@ -66,8 +67,6 @@ async function handleRequest(request) {
         case "delete":
             await deleteLink(body.shortLink);
             break;
-        case "manage":
-            return new Response(returnStaticPageManage());
         default:
             return new Response("Command not found.", {status: 404});
     }
