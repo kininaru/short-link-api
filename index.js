@@ -90,7 +90,7 @@ function returnStaticPageManage() {
         "        function upload() {\n" +
         "            let code = localStorage.getItem(\"code\");\n" +
         "            let link = document.getElementById('link').value;\n" +
-        "            fetch(\"https://api.7nm.co/add\", {\n" +
+        "            fetch(\"/add\", {\n" +
         "                method: \"POST\",\n" +
         "                headers: {'Authorization': code},\n" +
         "                body: JSON.stringify({link: link})\n" +
